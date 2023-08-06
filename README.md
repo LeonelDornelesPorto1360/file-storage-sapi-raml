@@ -26,10 +26,6 @@ Além disso, o projeto de armazenamento de arquivos é altamente escalável e fl
 
 Em resumo, o projeto de armazenamento de arquivos é uma solução completa e confiável para gerenciar arquivos de forma segura e eficiente. Com suas funcionalidades avançadas e foco na segurança, ele atende às necessidades de empresas que desejam armazenar, compartilhar e gerenciar seus arquivos de maneira eficaz.
 
-Aqui está o resumo do arquivo no formato Markdown:
-
-# File Storage Service API
-
 ## Tipos de Dados
 
 - **teste**:
