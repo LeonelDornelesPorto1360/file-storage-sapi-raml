@@ -1,0 +1,216 @@
+#%RAML 1.0
+title: File Storage Service
+
+types:
+  teste:
+    properties:
+      files:
+        type: string
+        required: true
+      path:
+        type: string
+        required: true
+  teste1:
+    properties:
+      path:
+        type: string
+        required: true
+  teste2:
+    properties:
+      file:
+        type: string
+        required: true
+  teste3:
+    properties:
+      files:
+        type: string
+        required: true
+/files:
+  /{bucket}:
+    /create:
+      post:
+        body:
+          multipart/form-data:
+            type: teste[]
+        responses:
+          204:
+          404:
+            body:
+              application/json:
+                example:
+                  "Path '/files/ftp/test/1/1/arquivos' doesn't exist"
+    /list:
+      post:
+        body:
+          multipart/form-data:
+            type: teste1[]
+        responses:
+          200:
+            body:
+              application/json:
+                examples:
+                  {
+    "item": [
+        {
+            "href": "http://localhost:8081/files/test/1/1/arquivos/1.pdf",
+            "name": "1.pdf",
+            "size": 281826
+        },
+        {
+            "href": "http://localhost:8081/files/test/1/1/arquivos/2.pdf",
+            "name": "2.pdf",
+            "size": 245893
+        }
+    ]
+}
+          404:
+            body:
+              application/json:
+                example:
+                  "Path '/files/ftp/test/1/1/arquivos' doesn't exist"
+    /download:
+      post:
+        responses:
+          200:
+          404:
+            body:
+              application/json:
+                example:
+                  "Path '/files/test/1/1/arquivos' doesn't exist"   
+    /delete:
+      post:
+        responses:
+          204:
+          404:
+            body:
+              application/json:
+                example:
+                  "Path '/files/test/1/1/arquivos' doesn't exist"
+  /{target}:
+    /{targetId}:
+      /content:
+        /download:
+          get:
+            responses:
+              200:
+              404:
+                body:
+                  application/json:
+                    example:
+                      "Path '/files/test/1/1/arquivos'"              
+        get:
+          responses:
+            200:
+              body:
+                application/json:
+                  example:
+                    {
+                      "target": "order",
+                      "targetId": "123456",
+                      "item": 
+                      {
+                          "href": "http://localhost:8081/files/order/123456/collection/1.jfif",
+                          "name": "1.jfif",
+                          "size": 15552
+                      }
+                    }
+            404:
+              body:
+                application/json:
+                  example:
+                    "Path '/files/test/1/1/arquivos'"
+        put:
+          body:
+            multipart/form-data:
+              type: teste2[]
+          responses:
+            204:
+            404:
+              body:
+                application/json:
+                  example:
+                    "Path '/files/test/1/1/arquivos'"
+        delete:
+         responses:
+            204:
+            404:
+              body:
+                application/json:
+                  example:
+                    "Path '/files/test/1/1/arquivos'"
+
+      /collection:
+        get:
+          responses:
+            200:
+              body:
+                application/json:
+                  examples:
+                    {
+    "target": "order",
+    "targetId": "123456",
+    "items": [
+        {
+            "href": "http://localhost:8081/files/order/123456/collection/1.jfif",
+            "name": "1.jfif",
+            "size": 15552
+        },
+        {
+            "href": "http://localhost:8081/files/order/123456/collection/2.PDF",
+            "name": "2.PDF",
+            "size": 127714
+        },
+        {
+            "href": "http://localhost:8081/files/order/123456/collection/3.txt",
+            "name": "3.txt",
+            "size": 5
+        },
+        {
+            "href": "http://localhost:8081/files/order/123456/collection/4.xlsx",
+            "name": "4.xlsx",
+            "size": 3245
+        }
+    ]
+}
+            404:
+              body:
+                application/json:
+                  example:
+                    "Path '/files/test/1/1/arquivos'"
+        put:
+          body:
+            multipart/form-data:
+              type: teste3[]
+          responses:
+            204:
+            404:
+              body:
+                application/json:
+                  example:
+                    "Path '/files/ftp/test/1/1/arquivos' doesn't exist"
+        delete:
+         responses:
+            204:
+            404:
+              body:
+                application/json:
+                  example:
+                    "Path '/files/test/1/1/arquivos'"
+        
+        /{fileName}:
+          get:
+            responses:
+              200:
+              404:
+                body:
+                  application/json:
+                    example:
+                      "Path '/files/test/1/1/arquivos'"      
+          delete:
+            responses:
+                204:
+                404:
+                  body:
+                    application/json:
+                      example:
+                        "Path '/files/test/1/1/arquivos'"
